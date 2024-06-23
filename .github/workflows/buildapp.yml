@@ -12,7 +12,7 @@ on:
         required: true
         type: string
       wget_cmd:
-        description: "Wget command from the cliget extension, make sure it outputs to 'main/YouTube.ipa' (if you dont have it, download it for your browser)"
+        description: "Wget command from the 'cliget' extension, make sure its an 'ipa' file format (if you dont have it, download it for your browser)"
         default: ""
         required: true
         type: string
@@ -106,6 +106,7 @@ jobs:
         id: prepare_youtube
         run: |
           ${{ inputs.wget_cmd }}
+          mv $(ls | grep -i ".ipa") main/YouTube.ipa
           cd ${{ github.workspace }}/main
           mv YouTube.ipa YouTube.zip
           unzip -q YouTube.zip
