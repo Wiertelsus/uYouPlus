@@ -11,8 +11,8 @@ on:
         default: "3.0.3"
         required: true
         type: string
-      decrypted_youtube_url:
-        description: "Direct URL to the decrypted YouTube ipa. The version of YouTube will be detected automatically."
+      wget_cmd:
+        description: "Wget command from the cliget extension, make sure it outputs to 'main/YouTube.ipa' (if you dont have it, download it for your browser)"
         default: ""
         required: true
         type: string
@@ -105,7 +105,7 @@ jobs:
       - name: Prepare YouTube iPA
         id: prepare_youtube
         run: |
-          wget --header 'Host: 2657fa71559b7366ed642a2305b5cfe3.r2.cloudflarestorage.com' --user-agent 'Mozilla/5.0 (Windows NT 10.0; rv:127.0) Gecko/20100101 Firefox/127.0' --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' --header 'Accept-Language: en-US,en;q=0.5' --header 'DNT: 1' --header 'Upgrade-Insecure-Requests: 1' --header 'Sec-Fetch-Dest: document' --header 'Sec-Fetch-Mode: navigate' --header 'Sec-Fetch-Site: none' --header 'Sec-Fetch-User: ?1' 'https://2657fa71559b7366ed642a2305b5cfe3.r2.cloudflarestorage.com/easyupload/d0gnb0_YouTube_19.19.5_Qn_.ipa?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=c1da4bcf7c9076d105cb082e4270665b%2F20240623%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20240623T230406Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b88a5d231c2e42b9e944080444c4bd752faa5db1e1cbf561c5f4840ca762a1c2' --output-document main/YouTube.ipa
+          ${{ inputs.wget_cmd }}
           cd ${{ github.workspace }}/main
           mv YouTube.ipa YouTube.zip
           unzip -q YouTube.zip
